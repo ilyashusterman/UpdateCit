@@ -23,7 +23,7 @@ class Update(object):
                 response = requests.post(
                     'https://login.centrexsoftware.com/post/5d9a6b957c8d0b3ae0711a4e665194a81ac88560/'
                     , params=payload)
-                assert 'Success' in response.content, 'Response is not ok!!'.format(response.text)
+                assert 'Success' in response.content, 'Response is not ok!!'.format(response.content)
             else:
                 logging.info('index={}'.format(index))
                 logging.info('Not effecting database on dry run!')
