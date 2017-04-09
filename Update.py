@@ -14,18 +14,21 @@ class Update(object):
         self.dry_run = dry_run
 
     def update(self):
-        persons = pandas.read_csv(self.filename, engine='python', encoding='utf-8-sig')
-        for _, person in persons.iterrows():
+        persons = pandas.read_csv(self.filename, engine='python', encoding='utf-8')
+        for index, person in persons.iterrows():
             payload = {'your-name': person['first_name'], 'your-email': person['email'],
                        'your-number': person['phone_number'], 'your-country': person['country']}
-            logging.info('Getting person {} for {}'.format(person['first_name'], payload))
+            logging.info('Getting person for {}'.format(payload))
             if not self.dry_run:
                 response = requests.post(
                     'https://login.centrexsoftware.com/post/5d9a6b957c8d0b3ae0711a4e665194a81ac88560/'
                     , params=payload)
                 assert 'Success' in response.content, 'Response is not ok!!'.format(response.text)
             else:
+                logging.info('index={}'.format(index))
                 logging.info('Not effecting database on dry run!')
+
+        logging.info('Updating DataBase Done Successfully!')
 
     @classmethod
     def main(cls):
