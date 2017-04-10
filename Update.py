@@ -6,6 +6,7 @@ import requests
 
 # Sample use:
 # python Update.py --update --dry-run
+# python Update.py --update --csv leadasd.csv
 
 
 class Update(object):
@@ -15,6 +16,7 @@ class Update(object):
 
     def update(self):
         persons = pandas.read_csv(self.filename, engine='python', encoding='utf-8')
+        persons.columns = ['email', 'first_name', 'last_name', 'phone_number', 'country']
         for index, person in persons.iterrows():
             payload = {'your-name': person['first_name'], 'your-email': person['email'],
                        'your-number': person['phone_number'], 'your-country': person['country']}
